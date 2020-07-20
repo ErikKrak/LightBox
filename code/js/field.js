@@ -1,4 +1,4 @@
-//Hello There!
+// Hello There!
 var Field = [];
 var GoalField = [];
 
@@ -37,9 +37,9 @@ function Init(preSetPar) {
 }
 
 function BuildField(wrapper, isPlayable, fieldArray, BaseClassNameBoxDiv, goalField) {
-    for (y = 0; y < FieldSizeY; y++) {
+    for (y = 0; y < FieldSizeY; y ++) {
         fieldArray[y] = [];
-        for (x = 0; x < FieldSizeX; x++) {
+        for (x = 0; x < FieldSizeX; x ++) {
             var box = new Box(x, y, isPlayable, fieldArray, BaseClassNameBoxDiv, goalField);
             wrapper.appendChild(box.divElement);
             fieldArray[y][x] = box;
@@ -105,7 +105,7 @@ function CalcGoal(field, preSet) {
         document.getElementById("goalPGWrapper").appendChild(p);
         ShuffleField(field);
     } else {
-        for (i = 0; i < preSet.fields.length; i++) {
+        for (i = 0; i < preSet.fields.length; i ++) {
             console.log(preSet.fields[i]);
             field[preSet.fields[i].y][preSet.fields[i].x].toggle(true);
         }
