@@ -31,15 +31,18 @@ function Init(preSetPar) {
     CalcGoal(GoalField, preSet);
 
     back_button.addEventListener("mousedown", function () {
+        if (preSet == levels.endless) {
+            document.cookie = `${highest_score}`;
+        }
         location.reload();
     })
 
 }
 
 function BuildField(wrapper, isPlayable, fieldArray, BaseClassNameBoxDiv, goalField) {
-    for (y = 0; y < FieldSizeY; y ++) {
+    for (y = 0; y < FieldSizeY; y++) {
         fieldArray[y] = [];
-        for (x = 0; x < FieldSizeX; x ++) {
+        for (x = 0; x < FieldSizeX; x++) {
             var box = new Box(x, y, isPlayable, fieldArray, BaseClassNameBoxDiv, goalField);
             wrapper.appendChild(box.divElement);
             fieldArray[y][x] = box;
@@ -103,9 +106,12 @@ function CalcGoal(field, preSet) {
         var p = document.createElement("p");
         p.innerHTML = `Score: ${score}`;
         document.getElementById("goalPGWrapper").appendChild(p);
+        var p1 = document.createElement("p");
+        p1.innerHTML = `Highest score: ${highest_score}`;
+        document.getElementById("goalPGWrapper").appendChild(p1);
         ShuffleField(field);
     } else {
-        for (i = 0; i < preSet.fields.length; i ++) {
+        for (i = 0; i < preSet.fields.length; i++) {
             console.log(preSet.fields[i]);
             field[preSet.fields[i].y][preSet.fields[i].x].toggle(true);
         }

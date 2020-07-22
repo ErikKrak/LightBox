@@ -1,4 +1,8 @@
 var score = 0;
+var highest_score = 0;
+if (document.cookie !== '0') {
+    highest_score = document.cookie;
+}
 var levels = {
     "lvl1": {
         "fields": [{
@@ -116,18 +120,27 @@ function StartGame() {
 
     newButton(endless_button = "endless_button", endless_text = "Endless Run", undefined);
     newButton(start_button = "start_button", levelText = "Level Select", undefined);
+    newButton(clear_button = "clear_button", levelText = "Clear High Score", undefined);
 
     document.getElementById(start_button).addEventListener("click", function () {
         wrapper.removeChild(document.getElementById(start_button));
         wrapper.removeChild(document.getElementById(endless_button));
+        wrapper.removeChild(document.getElementById(clear_button));
         LevelSelect();
     });
 
     document.getElementById(endless_button).addEventListener("mousedown", function () {
         wrapper.removeChild(document.getElementById(start_button));
         wrapper.removeChild(document.getElementById(endless_button));
+        wrapper.removeChild(document.getElementById(clear_button));
         Init(JSON.parse(levels.endless));
     });
+
+    document.getElementById(clear_button).addEventListener("click", function () {
+        document.cookie = '0';
+        highest_score = 0;
+        window.alert("Cookies are cleared!");
+    })
 }
 
 function newButton(buttonTitlePar, buttonTextPar, buttonClassPar) {

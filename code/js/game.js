@@ -104,8 +104,11 @@ function ProcessWinning(BoxPar) {
         setTimeout(function () {
             wrapper.removeChild(goalPGWrapper);
             wrapper.removeChild(playgroundWrapper);
-            console.log(score++);
+            score++;
             console.clear();
+            if (score > highest_score) {
+                highest_score = score;
+            }
             Init(preSet);
         }, 900);
     } else {
