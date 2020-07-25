@@ -137,7 +137,7 @@ function StartGame() {
     });
 
     document.getElementById(clear_button).addEventListener("click", function () {
-        document.cookie = "0";
+        document.cookie = '0';
         highest_score = 0;
         window.alert("Cookies are cleared!");
     })
@@ -155,14 +155,6 @@ function newButton(buttonTitlePar, buttonTextPar, buttonClassPar) {
     this.text.textContent = buttonTextPar;
     this.title.appendChild(this.text);
     wrapper.appendChild(this.title);
-}
-
-function newLevelButton(levelNoPar){
-    let levNoTitle = "level" + levelNoPar + "_button";
-    let levNoText = "Level " + levelNoPar;
-    let levClass = "level";
-    newButton(levNoTitle, levNoText, levClass);
-
 }
 
 function sideMenu(preSet) {
