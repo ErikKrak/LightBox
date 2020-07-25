@@ -7,11 +7,12 @@ function LevelSelect() {
     }
 
     //TODO: automatisiert Zahl hochzählen und eintragen
-    newLevelButton(1);
-    document.getElementById("level1_button").addEventListener("mousedown", function(){
+    newButton(level1_button = "level1_button", level1_text = "Level 1", "level", this.text = "Hallo!");
+    document.getElementById(level1_button).addEventListener("mousedown", function () {
         buttons();
         Init(levels.lvl1);
-    });
+        console.log(this.text);
+    })
 
     newButton(level2_button = "level2_button", level2_text = "Level 2", "level");
     document.getElementById(level2_button).addEventListener("mousedown", function () {

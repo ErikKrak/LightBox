@@ -1,17 +1,22 @@
 function LevelSelect() {
     function buttons() {
-        for(let i = 1; i <= 8; i++){
-            var lev_text = "level" + i + "_button";
-            wrapper.removeChild(document.getElementById(lev_text));
-        }
+        wrapper.removeChild(document.getElementById(level1_button));
+        wrapper.removeChild(document.getElementById(level2_button));
+        wrapper.removeChild(document.getElementById(level3_button));
+        wrapper.removeChild(document.getElementById(level4_button));
+        wrapper.removeChild(document.getElementById(level5_button));
+        wrapper.removeChild(document.getElementById(level6_button));
+        wrapper.removeChild(document.getElementById(level7_button));
+        wrapper.removeChild(document.getElementById(level8_button));
+        //TODO: for-Schleife, solange noch ein Element da ist, entfernen
     }
 
     //TODO: automatisiert Zahl hochzählen und eintragen
-    newLevelButton(1);
-    document.getElementById("level1_button").addEventListener("mousedown", function(){
+    newButton(level1_button = "level1_button", level1_text = "Level 1", "level");
+    document.getElementById(level1_button).addEventListener("mousedown", function () {
         buttons();
         Init(levels.lvl1);
-    });
+    })
 
     newButton(level2_button = "level2_button", level2_text = "Level 2", "level");
     document.getElementById(level2_button).addEventListener("mousedown", function () {
@@ -24,7 +29,7 @@ function LevelSelect() {
         buttons();
         Init(levels.lvl3);
     })
-    
+
     newButton(level4_button = "level4_button", level4_text = "Level 4", "level");
     document.getElementById(level4_button).addEventListener("mousedown", function () {
         buttons();
