@@ -1,27 +1,27 @@
-//Hello There!
+// Hello There!
 var Field = [];
 var GoalField = [];
 
 var FieldSizeX = 3;
 var FieldSizeY = 3;
 
-function Init(preSetPar){
+function Init(preSetPar) {
     preSet = preSetPar;
     var wrapper = document.getElementById("wrapper");
     var playgroundWrapper = document.createElement("div");
-        playgroundWrapper.id = "playgroundWrapper";
+    playgroundWrapper.id = "playgroundWrapper";
     wrapper.appendChild(playgroundWrapper);
     BuildField(playgroundWrapper, true, Field, "boxes", GoalField);
 
     var goalPGWrapper = document.createElement("div");
-        goalPGWrapper.id = "goalPGWrapper";
+    goalPGWrapper.id = "goalPGWrapper";
     var back_button = document.createElement("div");
-        back_button.className = "button";
-        back_button.style.height = "25px";
-        back_button.style.width = "100px";
-        back_button.style.fontSize = "170%";
+    back_button.className = "button";
+    back_button.style.height = "25px";
+    back_button.style.width = "100px";
+    back_button.style.fontSize = "170%";
     var back_text = document.createElement("div");
-        back_text.textContent = "Back";
+    back_text.textContent = "Back";
     back_button.appendChild(back_text);
     playgroundWrapper.appendChild(document.createElement('br'));
     playgroundWrapper.appendChild(back_button);
@@ -29,17 +29,20 @@ function Init(preSetPar){
 
     BuildField(goalPGWrapper, false, GoalField, "boxGoal", undefined);
     CalcGoal(GoalField, preSet);
-    
-    back_button.addEventListener("mousedown", function(){
+
+    back_button.addEventListener("mousedown", function () {
+        if (preSet == levels.endless) {
+            document.cookie = `${highest_score}`;
+        }
         location.reload();
     })
 
 }
 
-function BuildField(wrapper, isPlayable, fieldArray, BaseClassNameBoxDiv, goalField){
-    for(y = 0; y < FieldSizeY; y++){
+function BuildField(wrapper, isPlayable, fieldArray, BaseClassNameBoxDiv, goalField) {
+    for (y = 0; y < FieldSizeY; y++) {
         fieldArray[y] = [];
-        for(x = 0; x < FieldSizeX; x++){
+        for (x = 0; x < FieldSizeX; x++) {
             var box = new Box(x, y, isPlayable, fieldArray, BaseClassNameBoxDiv, goalField);
             wrapper.appendChild(box.divElement);
             fieldArray[y][x] = box;
@@ -48,7 +51,7 @@ function BuildField(wrapper, isPlayable, fieldArray, BaseClassNameBoxDiv, goalFi
     }
 }
 
-function Box(posX, posY, isPlayable, field, BaseClassNameBoxDiv, goalField){
+function Box(posX, posY, isPlayable, field, BaseClassNameBoxDiv, goalField) {
     this.x = posX;
     this.y = posY;
     this.field = field;
@@ -57,52 +60,58 @@ function Box(posX, posY, isPlayable, field, BaseClassNameBoxDiv, goalField){
     this.baseClassNameBoxDiv = BaseClassNameBoxDiv;
 
     this.active = false;
-    
+
     this.divElement = document.createElement('div');
     this.divElement.className = BaseClassNameBoxDiv + " boxOff";
 
-    this.toggle = function(toggleNeighbour){
+    this.toggle = function (toggleNeighbour) {
         this.active = !this.active;
-        if (this.active){
+        if (this.active) {
             this.divElement.className = BaseClassNameBoxDiv + " boxOn";
-        }else{
+        } else {
             this.divElement.className = BaseClassNameBoxDiv + " boxOff";
         }
-        if (toggleNeighbour){
-            if((this.field[this.y-1] !== undefined) && (this.field[this.y-1][this.x] !== undefined)){
-                this.field[this.y-1][this.x].toggle(false);
+        if (toggleNeighbour) {
+            if ((this.field[this.y - 1] !== undefined) && (this.field[this.y - 1][this.x] !== undefined)) {
+                this.field[this.y - 1][this.x].toggle(false);
             }
-            if((this.field[this.y+1] !== undefined) && (this.field[this.y+1][this.x] !== undefined)){
-                this.field[this.y+1][this.x].toggle(false);
+            if ((this.field[this.y + 1] !== undefined) && (this.field[this.y + 1][this.x] !== undefined)) {
+                this.field[this.y + 1][this.x].toggle(false);
             }
-            if(this.field[this.y][this.x-1] !== undefined){
-                this.field[this.y][this.x-1].toggle(false);
+            if (this.field[this.y][this.x - 1] !== undefined) {
+                this.field[this.y][this.x - 1].toggle(false);
             }
-            if(this.field[this.y][this.x+1] !== undefined){
-                this.field[this.y][this.x+1].toggle(false);
+            if (this.field[this.y][this.x + 1] !== undefined) {
+                this.field[this.y][this.x + 1].toggle(false);
             }
-            if((this.isPlayable) && (CheckWin(this.field, this.goalField))){
+            if ((this.isPlayable) && (CheckWin(this.field, this.goalField))) {
                 ProcessWinning(this);
-                
+
             }
         }
-   }
-   if(this.isPlayable){
-    this.divElement.addEventListener("click", (function(box){
-        return function(){ 
-                if(box.isPlayable){
+    }
+    if (this.isPlayable) {
+        this.divElement.addEventListener("click", (function (box) {
+            return function () {
+                if (box.isPlayable) {
                     box.toggle(true);
                 }
-        }
-    }(this)));
-   }
+            }
+        }(this)));
+    }
 }
 
-function CalcGoal(field, preSet){
-    if(preSet == levels.endless){
+function CalcGoal(field, preSet) {
+    if (preSet == levels.endless) {
+        var p = document.createElement("p");
+        p.innerHTML = `Score: ${score}`;
+        document.getElementById("goalPGWrapper").appendChild(p);
+        var p1 = document.createElement("p");
+        p1.innerHTML = `Highest score: ${highest_score}`;
+        document.getElementById("goalPGWrapper").appendChild(p1);
         ShuffleField(field);
-    }else{
-        for(i = 0; i < preSet.fields.length; i++){
+    } else {
+        for (i = 0; i < preSet.fields.length; i++) {
             console.log(preSet.fields[i]);
             field[preSet.fields[i].y][preSet.fields[i].x].toggle(true);
         }
